@@ -1,0 +1,139 @@
+<html>
+<head>
+<style>
+#imageslider
+{
+position:relative;
+margin:auto;
+height:350px;
+width:950px;
+overflow:hidden;
+
+}
+#images
+{
+position:relative;
+height:350px;
+width:1900px;
+font-size:0;
+}
+#butt1
+{
+left:850px;
+top:0px;
+position:absolute;
+width:100px;
+height:350px;
+border:none;
+font-size:1cm;
+font-weight:bolder;
+background-color:rgba(255,255,255,0.05);
+color:#333333;
+}
+#butt1:hover
+{
+background-image:linear-gradient(to right,rgba(0,0,0,0.3),rgba(255,255,255,0.3));
+}
+#butt2
+{
+position:absolute;
+width:100px;
+height:350px;
+top:0px;
+border:none;
+background-color:rgba(255,255,255,0.05);
+font-size:1cm;
+font-weight:bolder;
+color:#333333;
+}
+ #butt2:hover
+ {
+background-image:linear-gradient(to left,rgba(0,0,0,0.3),rgba(255,255,255,0.3));
+}
+</style>
+</head>
+<body>
+<div id="imageslider">
+<div id="images">
+<img id="pic1" height=350px width=950px src="pic1.jpg">
+<img id="pic2" height=350px width=950px src="pic2.jpg">
+<img id="pic3" height=350px width=950px src="pic3.jpg">
+</div>
+<button id="butt1" onclick="slidingbutt1()">&#10097</button>
+<button id="butt2" onclick="slidingbutt2()">&#10096</button>
+</div>
+<script>
+var t1=setTimeout(sliding,3000);
+var t2,t3,t4,firstchild,lastchild,temp;
+var pos=0;
+function sliding()
+{ 
+t2=setInterval(startslide,4);
+} 
+function startslide()
+{
+if(pos==-900)
+{
+clearInterval(t2);
+firstchild1=document.getElementById("images").firstElementChild;
+lastchild1=document.getElementById("images").firstElementChild.cloneNode();
+document.getElementById("images").appendChild(lastchild1);
+document.getElementById("images").removeChild(firstchild1);
+pos=0;
+document.getElementById("images").style.left=pos+"px";
+pos=pos-25;
+t4=setTimeout(sliding,3000);
+}
+else
+{
+pos=pos-25;
+document.getElementById("images").style.left=pos+"px";
+}
+}
+function slidingbutt1()
+{
+clearTimeout(t1);
+clearInterval(t2);
+clearTimeout(t3);
+clearTimeout(t4);
+sliding();
+}
+function slidingbutt2()
+{
+temp=pos;
+clearTimeout(t1);
+clearInterval(t2);
+clearTimeout(t3);
+clearTimeout(t4);
+t2=setInterval(slidingopp,4)
+}
+function slidingopp()
+{
+if(pos==(temp+900))
+{
+if(pos==-25)
+document.getElementById("images").style.left=pos+25+"px";
+clearInterval(t2);
+t1=setTimeout(sliding,3000);
+}
+else if(pos==0)
+{
+clearInterval(t2);
+document.getElementById("images").style.left=pos+25+"px";
+lastchild=document.getElementById("images").lastElementChild;
+firstchild=lastchild.cloneNode();
+document.getElementById("images").removeChild(document.getElementById("images").lastElementChild);
+document.getElementById("images").insertBefore(firstchild,document.getElementById("images").firstElementChild);
+pos=pos-900;
+document.getElementById("images").style.left=pos+"px";
+slidingbutt2();
+}
+else
+{
+pos=pos+25;
+document.getElementById("images").style.left=pos+"px";
+}
+}
+</script>
+</body>
+</html>
